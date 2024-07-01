@@ -14,9 +14,17 @@ import (
 
 const key string = "naru"
 
-const defaultPath string = "../../../legacy-script-2-yaml"
+/*
+ * before build test
+ * ex) go run .
+ */
+// const defaultPath string = "../../../script"
 
-// const defaultPath string = "./script"
+/*
+ * after build test
+ * ex) go run .
+ */
+const defaultPath string = "./script"
 
 const dbfile string = ".db.connection.enc"
 const path string = ""
