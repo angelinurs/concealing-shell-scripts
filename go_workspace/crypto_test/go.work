@@ -1,0 +1,10 @@
+go 1.21.4
+
+use (
+	./handler_crypto
+	./handler_db
+	./handler_file
+	./handler_yaml
+	./handler_argument
+	./main
+)

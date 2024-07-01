@@ -1,0 +1,90 @@
+2024/05/20 09:53:11 Test
+2024/05/20 09:53:11 End of Program
+2024/05/20 09:53:58 Test
+2024/05/20 09:53:58 End of Program
+INFO: 2024/05/20 09:56:57 test.go:28: Test
+INFO: 2024/05/20 09:56:57 test.go:24: End of Program
+INFO: 2024/05/20 14:35:27 test.go:36: Test
+INFO: 2024/05/20 14:35:27 test.go:32: End of Program
+INFO: 2024/05/20 14:36:10 test.go:38: Test
+INFO: 2024/05/20 14:36:10 test.go:32: End of Program
+INFO: 2024/05/20 14:36:10 test.go:33: -- begin get time --
+INFO: 2024/05/20 14:42:51 test.go:41: Test
+INFO: 2024/05/20 14:42:51 test.go:32: End of Program
+INFO: 2024/05/20 14:42:51 test.go:33: -- begin get time --
+INFO: 2024/05/20 14:42:51 test.go:36: -- begin get time Formatting --
+INFO: 2024/05/20 14:52:32 test.go:43: Test
+INFO: 2024/05/20 14:52:32 test.go:32: End of Program
+INFO: 2024/05/20 14:52:32 test.go:33: -- begin get time --
+INFO: 2024/05/20 14:52:32 test.go:36: -- begin get time Formatting --
+INFO: 2024/05/20 14:52:32 test.go:38: -- begin subtract time Formatting --
+INFO: 2024/05/20 14:53:35 test.go:43: Test
+INFO: 2024/05/20 14:53:35 test.go:32: End of Program
+INFO: 2024/05/20 14:53:35 test.go:33: -- begin get time --
+INFO: 2024/05/20 14:53:35 test.go:36: -- begin get time Formatting --
+INFO: 2024/05/20 14:53:35 test.go:38: -- begin subtract time Formatting --
+INFO: 2024/05/20 14:54:40 test.go:43: Test
+INFO: 2024/05/20 14:54:40 test.go:32: End of Program
+INFO: 2024/05/20 14:54:40 test.go:33: -- begin get time --
+INFO: 2024/05/20 14:54:40 test.go:36: -- begin get time Formatting --
+INFO: 2024/05/20 14:54:40 test.go:38: -- begin subtract time Formatting --
+INFO: 2024/05/20 14:55:16 test.go:43: Test
+INFO: 2024/05/20 14:55:16 test.go:32: End of Program
+INFO: 2024/05/20 14:55:16 test.go:33: -- begin get time --
+INFO: 2024/05/20 14:55:16 test.go:36: -- begin get time Formatting --
+INFO: 2024/05/20 14:55:16 test.go:38: -- begin subtract time Formatting --
+INFO: 2024/05/20 14:56:59 test.go:44: Test
+INFO: 2024/05/20 14:56:59 test.go:33: End of Program
+INFO: 2024/05/20 14:56:59 test.go:34: -- begin get time --
+INFO: 2024/05/20 14:56:59 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 14:56:59 test.go:39: -- begin subtract time Formatting --
+INFO: 2024/05/20 14:59:58 test.go:48: Test
+INFO: 2024/05/20 14:59:58 test.go:33: End of Program
+INFO: 2024/05/20 14:59:58 test.go:34: -- begin get time --
+INFO: 2024/05/20 14:59:58 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 14:59:58 test.go:40: -- begin subtract time Formatting --
+INFO: 2024/05/20 14:59:58 test.go:43: -- begin subtract Day/Year Formatting --
+INFO: 2024/05/20 16:14:11 test.go:48: Test
+INFO: 2024/05/20 16:14:11 test.go:33: End of Program
+INFO: 2024/05/20 16:14:11 test.go:34: -- begin get time --
+INFO: 2024/05/20 16:14:11 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 16:14:11 test.go:40: -- begin subtract time Formatting --
+INFO: 2024/05/20 16:14:11 test.go:43: -- begin subtract Day/Year Formatting --
+INFO: 2024/05/20 16:14:29 test.go:48: Test
+INFO: 2024/05/20 16:14:29 test.go:33: End of Program
+INFO: 2024/05/20 16:14:29 test.go:34: -- begin get time --
+INFO: 2024/05/20 16:14:29 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 16:14:29 test.go:40: -- begin subtract time Formatting --
+INFO: 2024/05/20 16:14:29 test.go:43: -- begin subtract Day/Year Formatting --
+INFO: 2024/05/20 16:18:21 test.go:48: Test
+INFO: 2024/05/20 16:18:21 test.go:33: End of Program
+INFO: 2024/05/20 16:18:21 test.go:34: -- begin get time --
+INFO: 2024/05/20 16:18:21 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 16:18:21 test.go:40: -- begin subtract time Formatting --
+INFO: 2024/05/20 16:18:21 test.go:43: -- begin subtract Day/Year Formatting --
+INFO: 2024/05/20 16:20:51 test.go:48: Test
+INFO: 2024/05/20 16:20:51 test.go:33: End of Program
+INFO: 2024/05/20 16:20:51 test.go:34: -- begin get time --
+INFO: 2024/05/20 16:20:51 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 16:20:51 test.go:40: -- begin subtract time Formatting --
+INFO: 2024/05/20 16:20:51 test.go:43: -- begin subtract Day/Year Formatting --
+INFO: 2024/05/20 16:21:11 test.go:48: Test
+INFO: 2024/05/20 16:21:11 test.go:33: End of Program
+INFO: 2024/05/20 16:21:11 test.go:34: -- begin get time --
+INFO: 2024/05/20 16:21:11 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 16:21:11 test.go:40: -- begin subtract time Formatting --
+INFO: 2024/05/20 16:21:11 test.go:43: -- begin subtract Day/Year Formatting --
+INFO: 2024/05/20 16:33:54 test.go:52: Test
+INFO: 2024/05/20 16:33:54 test.go:33: End of Program
+INFO: 2024/05/20 16:33:54 test.go:34: -- begin example time --
+INFO: 2024/05/20 16:33:54 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 16:33:54 test.go:40: -- begin subtract time Formatting --
+INFO: 2024/05/20 16:33:54 test.go:43: -- begin subtract Day/Year Formatting --
+INFO: 2024/05/20 16:33:54 test.go:46: -- begin get time --
+INFO: 2024/05/20 16:47:58 test.go:56: Test
+INFO: 2024/05/20 16:47:58 test.go:33: End of Program
+INFO: 2024/05/20 16:47:58 test.go:34: -- begin example time --
+INFO: 2024/05/20 16:47:58 test.go:37: -- begin get time Formatting --
+INFO: 2024/05/20 16:47:58 test.go:40: -- begin subtract time Formatting --
+INFO: 2024/05/20 16:47:58 test.go:43: -- begin subtract Day/Year Formatting --
+INFO: 2024/05/20 16:47:58 test.go:46: -- begin get time --

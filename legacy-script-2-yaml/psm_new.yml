@@ -1,0 +1,27 @@
+name: psm_new
+desc: psm_new
+date: 
+  now: 0
+  duration: 7
+sql:
+  - id: 1
+    query: |-
+      CREATE TABLE biz_log_summary_$now PARTITION OF biz_log_summary FOR VALUES IN ('$now')
+  - id: 2
+    query: |-
+      CREATE TABLE biz_log_result_$now PARTITION OF biz_log_result FOR VALUES IN ('$now')
+  - id: 3
+    query: |-
+      CREATE TABLE sql_result_$now PARTITION OF sql_result FOR VALUES FROM ('$now 000000') TO ('$now 235959')
+  - id: 4
+    query: |-
+      CREATE TABLE log_sql_$now PARTITION OF log_sql FOR VALUES FROM ('$now 000000') TO ('$now 235959')
+  - id: 5
+    query: |-
+      CREATE TABLE rule_biz_$now PARTITION OF rule_biz FOR VALUES IN ('$now')
+  - id: 6
+    query: |-
+      CREATE TABLE download_log_$now PARTITION OF download_log FOR VALUES IN ('$now')
+  - id: 7
+    query: |-
+      CREATE TABLE download_log_result_$now PARTITION OF download_log_result FOR VALUES IN ('$now')
