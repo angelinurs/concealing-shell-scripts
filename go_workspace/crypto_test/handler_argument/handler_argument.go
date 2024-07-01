@@ -134,10 +134,11 @@ func GetFlags() (bool, Arguments) {
 	flag.Parse()
 
 	if (flag.NFlag() == 0) || (flag.NFlag() > 5) || !wellFormed(params) {
-		fmt.Fprintf(os.Stderr, "Usage of %s:\n", "Concealing Shell Script v 1.0")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "## option:")
-		flag.PrintDefaults()
+		flag.Usage()
+		// fmt.Fprintf(os.Stderr, "Usage of %s:\n", "Concealing Shell Script v 1.0")
+		// fmt.Fprintln(os.Stderr, "")
+		// fmt.Fprintln(os.Stderr, "## option:")
+		// flag.PrintDefaults()
 
 		os.Exit(1)
 		// return false, "" /
