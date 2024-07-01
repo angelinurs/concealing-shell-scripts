@@ -1,0 +1,9 @@
+services:
+  rocky-8.8:
+    build: ./Dockerfile-rocky8.8-shc-dev
+      # context: ./Dockerfile-rocky8.8-shc-dev
+      # dockerfile: .
+    # command:
+    #   - tail
+    #   - -f
+    #   - /dev/null

@@ -1,0 +1,40 @@
+목표/일정:
+  작성일자: mon, 13 May 2024
+  작업 분류:
+    - convert shell script to binary:
+      - 일정:
+        - 5월 20~21 일
+      - 목표:
+        - shell script를 binary 로 직접 전환
+        - 전환이후 문제점 확인:
+          - 이식성의 문제: library 의존도
+          - 취약점 : binary 전화후 db 접속 정보가 누출이 되는지
+          - Maintenance: 기관별 설치 환경에 따른 의존도가 있는지?
+    - golang,jar pros/cons 검토:
+      - 일정:
+        - 5월 21~22 일
+      - 목표:
+        - golang,jar 개발시 예상되는 문제 검토
+        - 전환이후 문제점 확인:
+          - 이식성의 문제: library 의존도
+          - 취약점 : binary 전화후 db 접속 정보가 누출이 되는지
+          - Maintenance: 기관별 설치 환경에 따른 의존도가 있는지?
+    - to golang executor:
+      - 일정:
+        - 5월 22-27 일
+      - 목표:
+        - 기존의 shell script 를 golang 으로 binary 전환
+        - 전환이후 문제점 확인:
+          - 이식성의 문제: library 의존도
+          - 취약점 : binary 전화후 db 접속 정보가 누출이 되는지
+          - Maintenance: 유지보수에 용이한지.
+    - jar ( java archive ):
+      - 일정:
+        - 5월 28-31 일
+      - 목표:
+        - 기존의 shell script 를 jar 로 전환
+        - 전환이후 문제점 확인:
+          - 이식성의 문제: version 별 library 의존도
+          - 취약점 : binary 전화후 db 접속 정보가 누출이 되는지
+          - Maintenance: 기존의 psm java code 를 수정해야하는지
+          - 메모리 점유율 관련 기존의 psm 에 영향을 주는지
