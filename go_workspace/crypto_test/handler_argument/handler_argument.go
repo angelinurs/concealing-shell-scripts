@@ -69,7 +69,7 @@ func GetFlags() (bool, Arguments) {
 
 		// sub mode
 		Pwd:  false,
-		File: "./scripts/db.connection.enc",
+		File: "./script/.db.connection.enc",
 		Out:  "stdout",
 
 		// mode run
@@ -113,14 +113,16 @@ func GetFlags() (bool, Arguments) {
 		fmt.Fprintf(os.Stderr, "Usage of %s:\n", "Concealing Shell Script v 1.0")
 		fmt.Fprintln(os.Stderr, "")
 		fmt.Fprintln(os.Stderr, "## encode:")
-		fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -o <new filename> -W")
-		fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -o stdout -W")
 		fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -W")
+		// fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -o <new filename> -W")
+		// fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -o stdout -W")
+		// fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -W")
 		fmt.Fprintln(os.Stderr, "")
 		fmt.Fprintln(os.Stderr, "## decode:")
-		fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -o <new filename> -W")
-		fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -o stdout -W")
 		fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -W")
+		// fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -o <new filename> -W")
+		// fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -o stdout -W")
+		// fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -W")
 		fmt.Fprintln(os.Stderr, "")
 		fmt.Fprintln(os.Stderr, "## run:")
 		fmt.Fprintln(os.Stderr, "- scripter -run -script <scriptname : psm_new>")
