@@ -86,7 +86,7 @@ func getQueryPsmNew(app *handler_yaml.Application) []string {
 
 	// append query
 	for now.Before(dateTale) {
-		nowDate := now.Format("20240613")
+		nowDate := now.Format("20060102")
 		for _, sql := range app.SQL {
 
 			query := strings.Replace(sql.Query, "$now", nowDate, -1)
@@ -113,7 +113,7 @@ func getQuerySummary(app *handler_yaml.Application) []string {
 	// get 1 day ago
 	now = now.AddDate(0, 0, app.Date.Now)
 
-	nowDate := now.Format("20240613")
+	nowDate := now.Format("20060102")
 	for _, sql := range app.SQL {
 
 		query := strings.Replace(sql.Query, "$now", nowDate, -1)
