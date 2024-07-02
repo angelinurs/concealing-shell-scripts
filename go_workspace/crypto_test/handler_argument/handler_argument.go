@@ -34,6 +34,10 @@ var Scripts = []string{
 	"summary_reqtype",
 	"summary_statistics",
 	"summary_time",
+	"summary_download_month",
+	"summary_reqtype_monthly",
+	"summary_statistics_monthly",
+	"summary_time_monthly",
 }
 
 /*

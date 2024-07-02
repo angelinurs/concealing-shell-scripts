@@ -127,6 +127,10 @@ Begin
 # warning When 'psm database' interworking is not normal
 ```
 
+## Static library build
+
+- `go build -ldflags="-linkmode external -extldflags -static" -o scriptor main.go`
+
 ## Author
 
 - gipark@easycerti.com

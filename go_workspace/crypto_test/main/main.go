@@ -120,10 +120,33 @@ func getQuerySummary(app *handler_yaml.Application) []string {
 	// get 1 day ago
 	now = now.AddDate(0, 0, app.Date.Now)
 
-	nowDate := now.Format("20240613")
+	nowDate := now.Format("20060102")
 	for _, sql := range app.SQL {
 
 		query := strings.Replace(sql.Query, "$now", nowDate, -1)
+		queryCollection = append(queryCollection, query)
+	}
+
+	return queryCollection
+}
+
+func getQueryMonthly(app *handler_yaml.Application) []string {
+
+	var queryCollection []string
+
+	now := time.Now()
+
+	// get 1 day ago
+	now = now.AddDate(0, 0, app.Date.Now)
+
+	// Extract the first day of the month from yesterday's date
+	firstOfMonth := time.Date(now.Year(), now.Month(), 1, 0, 0, 0, 0, time.Local)
+
+	nowDate := now.Format("20060102")
+	for _, sql := range app.SQL {
+
+		query := strings.Replace(sql.Query, "$monthOneDay", firstOfMonth.Format("20060102"), -1)
+		query = strings.Replace(query, "$monthLastDay", nowDate, -1)
 		queryCollection = append(queryCollection, query)
 	}
 
@@ -213,6 +236,8 @@ func ArgumentAnalyzer(app handler_argument.Arguments) {
 				queryCollection = getQueryPsmNew(&app)
 			case strings.Contains(app.Name, "summary"):
 				queryCollection = getQuerySummary(&app)
+			case strings.Contains(app.Name, "month"):
+				queryCollection = getQueryMonthly(&app)
 			default:
 				fmt.Println("??? : The corresponding sql script is not on the list")
 			}
