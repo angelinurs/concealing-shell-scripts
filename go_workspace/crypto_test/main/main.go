@@ -81,18 +81,25 @@ func getQueryPsmNew(app *handler_yaml.Application) []string {
 	var queryCollection []string
 
 	now := time.Now()
-	// get after 7 days date
-	dateTale := now.AddDate(0, 0, app.Date.Duration)
+
+	// start date
+	startDate := now.AddDate(0, 0, app.Date.Now)
+	// past duration
+	finalDate := app.Date.Now + app.Date.Duration
+	dateTale := now.AddDate(0, 0, finalDate)
 
 	// append query
 	for now.Before(dateTale) {
-		nowDate := now.Format("20060102")
+
+		presentDate := startDate.Format("20060102")
+
 		for _, sql := range app.SQL {
 
-			query := strings.Replace(sql.Query, "$now", nowDate, -1)
+			query := strings.Replace(sql.Query, "$now", presentDate, -1)
 			queryCollection = append(queryCollection, query)
 		}
-		now = now.AddDate(0, 0, 1) // 날짜를 하루씩 증가시킴
+
+		startDate = startDate.AddDate(0, 0, 1) // 날짜를 하루씩 증가시킴
 	}
 
 	// fmt.Println("### Query Collection ")
@@ -113,7 +120,7 @@ func getQuerySummary(app *handler_yaml.Application) []string {
 	// get 1 day ago
 	now = now.AddDate(0, 0, app.Date.Now)
 
-	nowDate := now.Format("20060102")
+	nowDate := now.Format("20240613")
 	for _, sql := range app.SQL {
 
 		query := strings.Replace(sql.Query, "$now", nowDate, -1)
