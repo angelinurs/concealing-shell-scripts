@@ -1,0 +1,50 @@
+name: summary_reqtype_monthly
+desc: summary_reqtype_monthly
+date: 
+  now: -1
+  duration: 0
+sql:
+  - id: 1
+    query: |-
+      DELETE FROM summary_reqtype_monthly WHERE month = substring('$monthOneDay',0,7);
+  - id: 2
+    query: |-
+      INSERT INTO summary_reqtype_monthly
+      select
+        log_delimiter
+        , substring(proc_date,0,7) as month
+        , to_char(to_date(proc_date, 'YYYYMMDD'), 'W') as week
+        , system_seq
+        , system_name
+        , dept_id
+        , dept_name
+        , emp_user_id
+        , emp_user_name
+        , req_type
+        , sum(cnt) cnt
+        , sum(logcnt) logcnt
+      from 
+        summary_reqtype
+      where proc_date between '$monthOneDay' and '$monthLastDay'
+      group by 	
+        log_delimiter
+        , month
+        , week
+        , system_seq
+        , system_name
+        , dept_id
+        , dept_name
+        , emp_user_id
+        , emp_user_name
+        , req_type
+      order by
+        log_delimiter
+        , month
+        , week
+        , system_seq
+        , system_name
+        , dept_id
+        , dept_name
+        , emp_user_id
+        , emp_user_name
+        , req_type;

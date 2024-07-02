@@ -1,0 +1,25 @@
+name: summary_download_month
+desc: summary_download_month
+date: 
+  now: -1
+  duration: 0
+sql:
+  - id: 1
+    query: |-
+      DELETE FROM summary_download_monthly WHERE month = substring('$monthOneDay',0,7);
+  - id: 2
+    query: |-
+      INSERT INTO summary_download_monthly
+      select
+        log_delimiter
+        , substring(proc_date,0,7) as month
+        , to_char(to_date(proc_date, 'YYYYMMDD'), 'W') as week
+        , system_seq
+        , file_ext
+        , sum(file_ext_cnt) file_ext_cnt
+      from 
+        summary_download
+      where proc_date between '$monthOneDay' and '$monthLastDay'
+      and file_ext_cnt > 0
+      group by log_delimiter, month, week, system_seq, file_ext, file_ext_cnt
+      order by log_delimiter, month, week, system_seq, file_ext, file_ext_cnt
