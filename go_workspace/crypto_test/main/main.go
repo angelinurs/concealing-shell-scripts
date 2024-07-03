@@ -68,10 +68,12 @@ func convertToFile(key string, filename string, kind string) {
 	handler_file.WriteFile(newFilename, afterContent, path)
 }
 
+// service func
 func toEncryptContent(key string, content string) string {
 	return handler_crypto.Encrypt(key, content)
 }
 
+// service func
 func toDecryptContent(key string, content string) string {
 	return handler_crypto.Decrypt(key, content)
 }
@@ -107,6 +109,32 @@ func getQueryPsmNew(app *handler_yaml.Application) []string {
 	// 	fmt.Printf("    - Query:\n")
 	// 	fmt.Printf("        %s\n", sql)
 	// }
+
+	return queryCollection
+}
+
+func getQueryPsmNewCustom(app *handler_yaml.Application, beginDate string, endDate string) []string {
+
+	var queryCollection []string
+
+	// start date
+	startDate, _ := time.Parse("20060102", beginDate)
+	// end date
+	dateTale, _ := time.Parse("20060102", endDate)
+
+	// append query
+	for startDate.Before(dateTale) || startDate.Equal(dateTale) {
+
+		presentDate := startDate.Format("20060102")
+
+		for _, sql := range app.SQL {
+
+			query := strings.Replace(sql.Query, "$now", presentDate, -1)
+			queryCollection = append(queryCollection, query)
+		}
+
+		startDate = startDate.AddDate(0, 0, 1) // 날짜를 하루씩 증가시킴
+	}
 
 	return queryCollection
 }
@@ -153,9 +181,29 @@ func getQueryMonthly(app *handler_yaml.Application) []string {
 	return queryCollection
 }
 
-func ArgumentAnalyzer(app handler_argument.Arguments) {
+func getQueryMonthlyCustom(app *handler_yaml.Application, beginDate string, endDate string) []string {
 
-	if app.Encode && !app.Decode && !app.Run && len(app.File) > 0 && app.Pwd {
+	var queryCollection []string
+
+	// start date
+	startDate, _ := time.Parse("20060102", beginDate)
+	// end date
+	dateTale, _ := time.Parse("20060102", endDate)
+
+	nowDate := startDate.Format("20060102")
+	for _, sql := range app.SQL {
+
+		query := strings.Replace(sql.Query, "$monthOneDay", dateTale.Format("20060102"), -1)
+		query = strings.Replace(query, "$monthLastDay", nowDate, -1)
+		queryCollection = append(queryCollection, query)
+	}
+
+	return queryCollection
+}
+
+func ArgumentAnalyzer(params handler_argument.Arguments) {
+
+	if params.Encode && !params.Decode && !params.Run && len(params.File) > 0 && params.Pwd {
 		/*
 		 * Encode
 		 */
@@ -168,10 +216,10 @@ func ArgumentAnalyzer(app handler_argument.Arguments) {
 
 		// file encode
 		kind := "encode"
-		script_filename := app.File
+		script_filename := params.File
 		convertToFile(key, script_filename, kind)
 
-	} else if !app.Encode && app.Decode && !app.Run && len(app.File) > 0 && app.Pwd {
+	} else if !params.Encode && params.Decode && !params.Run && len(params.File) > 0 && params.Pwd {
 		/*
 		 * Decode
 		 */
@@ -184,7 +232,7 @@ func ArgumentAnalyzer(app handler_argument.Arguments) {
 
 		// file decode
 		kind := "decode"
-		script_filename := app.File
+		script_filename := params.File
 		convertToFile(key, script_filename, kind)
 
 	} else {
@@ -193,13 +241,13 @@ func ArgumentAnalyzer(app handler_argument.Arguments) {
 		 * Run
 		 */
 
-		if !app.Encode && !app.Decode && app.Run && !handler_argument.IsInScriptList(app.Script) {
-			fmt.Printf("> - %s is not on the script list\n", app.Script)
+		if !params.Encode && !params.Decode && params.Run && !handler_argument.IsInScriptList(params.Script) {
+			fmt.Printf("> - %s is not on the script list\n", params.Script)
 			return
-		} else if !app.Encode && !app.Decode && app.Run && handler_argument.IsInScriptList(app.Script) {
+		} else if !params.Encode && !params.Decode && params.Run && handler_argument.IsInScriptList(params.Script) {
 
 			// encrypt 된 file 로 강제
-			scriptFile := fmt.Sprintf("%s/%s.enc", defaultPath, app.Script)
+			scriptFile := fmt.Sprintf("%s/%s.enc", defaultPath, params.Script)
 			if !handler_file.IsFileExist(scriptFile) {
 				fmt.Println("> - script file is not exist")
 				return
@@ -231,13 +279,22 @@ func ArgumentAnalyzer(app handler_argument.Arguments) {
 
 			var queryCollection []string
 
+			// script selector
 			switch {
 			case strings.Contains(app.Name, "psm_new"):
-				queryCollection = getQueryPsmNew(&app)
+				if check, _ := handler_argument.IsDate(params.StartDate, params.EndDate); check {
+					queryCollection = getQueryPsmNewCustom(&app, params.StartDate, params.EndDate)
+				} else {
+					queryCollection = getQueryPsmNew(&app)
+				}
 			case strings.Contains(app.Name, "summary"):
 				queryCollection = getQuerySummary(&app)
 			case strings.Contains(app.Name, "month"):
-				queryCollection = getQueryMonthly(&app)
+				if check, _ := handler_argument.IsDate(params.StartDate, params.EndDate); check {
+					queryCollection = getQueryPsmNewCustom(&app, params.StartDate, params.EndDate)
+				} else {
+					queryCollection = getQueryPsmNew(&app)
+				}
 			default:
 				fmt.Println("??? : The corresponding sql script is not on the list")
 			}

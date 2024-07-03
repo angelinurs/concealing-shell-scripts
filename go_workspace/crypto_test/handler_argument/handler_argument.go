@@ -7,9 +7,58 @@ import (
 	"os"
 	"strings"
 	"syscall"
+	"time"
 
 	"golang.org/x/crypto/ssh/terminal"
 )
+
+const helpMsg = `
+ __   __     ______     ______     __  __
+/\ "-.\ \   /\  __ \   /\  == \   /\ \/\ \
+\ \ \-.  \  \ \  __ \  \ \  __<   \ \ \_\ \
+ \ \_\"\__\  \ \_\ \_\  \ \_\ \_\  \ \_____\
+  \/_/ \/_/   \/_/\/_/   \/_/ /_/   \/_____/
+
+== Concealing Shell Script v 1.0 ==
+
+Usage of Concealing Shell Script v 1.0
+
+## encode:
+  scriptor -enc -f <filename> -W
+
+## decode:
+  scriptor -dec -f <filename> -W
+
+## run:
+  scripter -run -script <scriptname : psm_new>
+    OR
+  scripter -run -script <scriptname : psm_new> -start 20030109 -end 20051231
+
+## option:
+* Encode/Decode
+  -dec  Decoding mode
+  -enc  Encoding mode
+  -W    encode/decode password
+  -f    Input file ./script/.db.connection.enc
+
+* Run
+  -run  Running script
+  -script   Select one
+    - psm_new
+    - summary_download
+    - summary_misdetect
+    - summary_reqtype
+    - summary_statistics
+    - summary_time
+    - summary_download_month
+    - summary_reqtype_monthly
+    - summary_statistics_monthly
+    - summary_time_monthly
+
+  ** Below options are used only when running 'psm_new' or 'month' scripts.
+  -start   Start date 20230215
+  -end     End date   20231231
+`
 
 // client line tool option
 type Arguments struct {
@@ -25,6 +74,10 @@ type Arguments struct {
 	// mode run
 	Run    bool
 	Script string
+
+	// custom datetime
+	StartDate string
+	EndDate   string
 }
 
 var Scripts = []string{
@@ -79,6 +132,10 @@ func GetFlags() (bool, Arguments) {
 		// mode run
 		Run:    false,
 		Script: "",
+
+		// custom datetime
+		StartDate: "",
+		EndDate:   "",
 	}
 
 	var params Arguments
@@ -95,44 +152,22 @@ func GetFlags() (bool, Arguments) {
 	}
 	msg := addPrefix(Scripts)
 
+	// Encode, decode
 	flag.BoolVar(&params.Encode, "enc", defaultParams.Encode, "Encoding mode")
 	flag.BoolVar(&params.Decode, "dec", defaultParams.Decode, "Decoding mode")
-	flag.BoolVar(&params.Run, "run", defaultParams.Run, "Running script")
 	flag.StringVar(&params.File, "f", defaultParams.File, "Input file")
 	flag.StringVar(&params.Out, "o", defaultParams.Out, "script stdout or filename")
 	flag.BoolVar(&params.Pwd, "W", defaultParams.Pwd, "encode/decode password")
 
+	// Run script
+	flag.BoolVar(&params.Run, "run", defaultParams.Run, "Running script")
 	flag.StringVar(&params.Script, "script", defaultParams.Script, msg)
+	flag.StringVar(&params.StartDate, "start", defaultParams.StartDate, "Start date - format 20230215")
+	flag.StringVar(&params.EndDate, "end", defaultParams.EndDate, "Start date - format 20231121")
 
 	showDisplay := func() {
-		fmt.Fprintln(os.Stderr, " __   __     ______     ______     __  __    ")
-		fmt.Fprintln(os.Stderr, "/\\ \"-.\\ \\   /\\  __ \\   /\\  == \\   /\\ \\/\\ \\   ")
-		fmt.Fprintln(os.Stderr, "\\ \\ \\-.  \\  \\ \\  __ \\  \\ \\  __<   \\ \\ \\_\\ \\  ")
-		fmt.Fprintln(os.Stderr, " \\ \\_\\\"\\__\\  \\ \\_\\ \\_\\  \\ \\_\\ \\_\\  \\ \\_____\\ ")
-		fmt.Fprintln(os.Stderr, "  \\/_/ \\/_/   \\/_/\\/_/   \\/_/ /_/   \\/_____/ ")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "== Concealing Shell Script v 1.0 ==")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintf(os.Stderr, "Usage of %s:\n", "Concealing Shell Script v 1.0")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "## encode:")
-		fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -W")
-		// fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -o <new filename> -W")
-		// fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -o stdout -W")
-		// fmt.Fprintln(os.Stderr, "  scriptor -enc -f <filename> -W")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "## decode:")
-		fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -W")
-		// fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -o <new filename> -W")
-		// fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -o stdout -W")
-		// fmt.Fprintln(os.Stderr, "  scriptor -dec -f <filename> -W")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "## run:")
-		fmt.Fprintln(os.Stderr, "- scripter -run -script <scriptname : psm_new>")
-		fmt.Fprintln(os.Stderr, "")
-		fmt.Fprintln(os.Stderr, "## option:")
-		flag.PrintDefaults()
+		fmt.Fprintln(os.Stderr, helpMsg)
+		// flag.PrintDefaults()
 	}
 
 	flag.Usage = showDisplay
@@ -153,11 +188,23 @@ func GetFlags() (bool, Arguments) {
 	return true, params
 }
 
+// Validate each option value
 func wellFormed(params Arguments) bool {
 
 	encode := (params.Encode && !params.Decode && !params.Run && len(params.File) > 0 && params.Pwd)
 	decode := (!params.Encode && params.Decode && !params.Run && len(params.File) > 0 && params.Pwd)
 	run := (!params.Encode && !params.Decode && params.Run && len(params.Script) > 0 && IsInScriptList(params.Script))
+
+	// When each value comes in
+	if len(params.StartDate) > 0 && len(params.EndDate) > 0 {
+
+		// Validation for date formatting
+		if check, msg := IsDate(params.StartDate, params.EndDate); !check {
+			fmt.Fprintln(os.Stderr, msg)
+
+			os.Exit(1)
+		}
+	}
 
 	return (encode || decode || run)
 
@@ -196,4 +243,14 @@ func IsInScriptList(script string) bool {
 		return false
 	}
 	return contains(Scripts, script)
+}
+
+func IsDate(startDate string, endDate string) (bool, string) {
+	if _, err := time.Parse("20060102", startDate); err != nil {
+		return false, fmt.Sprintf("%s is wrong format", startDate)
+	}
+	if _, err := time.Parse("20060102", endDate); err != nil {
+		return false, fmt.Sprintf("%s is wrong format", endDate)
+	}
+	return true, ""
 }
