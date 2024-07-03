@@ -40,6 +40,10 @@ git clone http://192.168.0.6:11180/psm-legacy/concealing-shell-scripts.git
 ./script/summary_reqtype.yml
 ./script/summary_statistics.yml
 ./script/summary_time.yml
+./script/summary_download_month.yml
+./script/summary_reqtype_monthly.yml
+./script/summary_statistics_monthly.yml
+./script/summary_time_monthly.yml
 
 # encoded
 
@@ -53,6 +57,11 @@ git clone http://192.168.0.6:11180/psm-legacy/concealing-shell-scripts.git
 ./script/summary_reqtype.enc
 ./script/summary_statistics.enc
 ./script/summary_time.enc
+./script/summary_download_month.enc
+./script/summary_reqtype_monthly.enc
+./script/summary_statistics_monthly.enc
+./script/summary_time_monthly.enc
+
 ```
 
 - [ ] Show usages
@@ -63,7 +72,7 @@ $ ./scriptor
 
 == Concealing Shell Script v 1.0 ==
 
-Usage of Concealing Shell Script v 1.0:
+Usage of Concealing Shell Script v 1.0
 
 ## encode:
   scriptor -enc -f <filename> -W
@@ -72,28 +81,34 @@ Usage of Concealing Shell Script v 1.0:
   scriptor -dec -f <filename> -W
 
 ## run:
-- scripter -run -script <scriptname : psm_new>
+  scripter -run -script <scriptname : psm_new>
+    OR
+  scripter -run -script <scriptname : psm_new> -start 20030109 -end 20051231
 
 ## option:
+* Encode/Decode
+  -dec  Decoding mode
+  -enc  Encoding mode
   -W    encode/decode password
-  -dec
-        Decoding mode
-  -enc
-        Encoding mode
-  -f string
-        Input file (default "./script/.db.connection.enc")
-  -o string
-        script stdout or filename (default "stdout")
-  -run
-        Running script
-  -script string
-        Select one
-        - psm_new
-        - summary_download
-        - summary_misdetect
-        - summary_reqtype
-        - summary_statistics
-        - summary_time
+  -f    Input file ./script/.db.connection.enc
+
+* Run
+  -run  Running script
+  -script   Select one
+    - psm_new
+    - summary_download
+    - summary_misdetect
+    - summary_reqtype
+    - summary_statistics
+    - summary_time
+    - summary_download_month
+    - summary_reqtype_monthly
+    - summary_statistics_monthly
+    - summary_time_monthly
+
+  ** Below options are used only when running 'psm_new' or 'month' scripts.
+  -start   Start date 20230215
+  -end     End date   20231231
 ```
 
 - [ ] Encode
