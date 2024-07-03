@@ -140,6 +140,12 @@ $ ./scriptor -run -script psm_new
 Begin
 2024/07/02 09:50:07 dial tcp 127.0.0.1:5431: connect: connection refused
 # warning When 'psm database' interworking is not normal
+
+$ ./scriptor -run -script psm_new -start 20030109 -end 20051231
+Begin
+2024/07/02 09:50:07 dial tcp 127.0.0.1:5431: connect: connection refused
+# warning When 'psm database' interworking is not normal
+
 ```
 
 ## Static library build
